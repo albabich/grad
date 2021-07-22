@@ -17,6 +17,7 @@ VALUES ('Admin', 'admin@gmail.com', '{noop}admin'),
 
 INSERT INTO user_role (role, user_id)
 VALUES ('ADMIN', 100000),
+       ('USER', 100000),
        ('USER', 100001),
        ('USER', 100002),
        ('USER', 100003);

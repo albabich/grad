@@ -1,6 +1,7 @@
 package com.albabich.grad.web;
 
 import com.albabich.grad.util.exception.ErrorType;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -26,9 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "classpath:spring/spring-mvc.xml",
         "classpath:spring/spring-db.xml"
 })
-//@WebAppConfiguration
-//@ExtendWith(SpringExtension.class)
 @Transactional
+//@ExtendWith(TimingExtension.class)
 //@ActiveProfiles(resolver = AllActiveProfileResolver.class)
 public abstract class AbstractControllerTest {
 

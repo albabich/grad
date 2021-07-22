@@ -26,6 +26,7 @@ class ProfileRestaurantRestControllerTest extends AbstractControllerTest {
     public void setup() {
         cacheManager.getCache("restaurantsAndMenus").clear();
     }
+
     @Test
     void getAllWithMenuItemsToday() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL+"with-menu/today")
