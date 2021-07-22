@@ -36,12 +36,12 @@
     <tx:annotation-driven/>
 
     <!--For running with installed tomcat-->
-<!--            <bean id="dataSource"-->
-<!--                  class="org.apache.tomcat.jdbc.pool.DataSource"-->
-<!--                  p:driverClassName="${database.driverClassName}"-->
-<!--                  p:url="${database.url}"-->
-<!--                  p:username="${database.username}"-->
-<!--                  p:password="${database.password}"/>-->
+            <bean id="dataSource"
+                  class="org.apache.tomcat.jdbc.pool.DataSource"
+                  p:driverClassName="${database.driverClassName}"
+                  p:url="${database.url}"
+                  p:username="${database.username}"
+                  p:password="${database.password}"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"

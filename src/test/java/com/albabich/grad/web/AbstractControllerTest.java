@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "classpath:spring/spring-db.xml"
 })
 @Transactional
-//@ExtendWith(TimingExtension.class)
+@ExtendWith(TimingExtension.class)
 //@ActiveProfiles(resolver = AllActiveProfileResolver.class)
 public abstract class AbstractControllerTest {
 

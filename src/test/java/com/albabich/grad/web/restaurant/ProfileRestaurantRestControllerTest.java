@@ -19,13 +19,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProfileRestaurantRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = ProfileRestaurantRestController.REST_URL + '/';
 
-    @Autowired
-    private CacheManager cacheManager;
-
-    @BeforeEach
-    public void setup() {
-        cacheManager.getCache("restaurantsAndMenus").clear();
-    }
+//    @Autowired
+//    private CacheManager cacheManager;
+//
+//    @BeforeEach
+//    public void setup() {
+//        cacheManager.getCache("restaurantsAndMenus").clear();
+//    }
 
     @Test
     void getAllWithMenuItemsToday() throws Exception {
