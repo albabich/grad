@@ -8,8 +8,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.albabich.grad.web.RestaurantTestData.REST_MATCHER;
-import static com.albabich.grad.web.RestaurantTestData.restaurants;
+import static com.albabich.grad.web.RestaurantTestData.*;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
 import static com.albabich.grad.web.UserTestData.user1;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,6 +33,6 @@ class ProfileRestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(REST_MATCHER.contentJson(restaurants));
+                .andExpect(REST_WITH_MENU_ITEMS_MATCHER.contentJson(restaurantsWithMenuToday));
     }
 }

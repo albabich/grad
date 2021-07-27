@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 })
 @Transactional
 @ExtendWith(TimingExtension.class)
-//@ActiveProfiles(resolver = AllActiveProfileResolver.class)
 public abstract class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();

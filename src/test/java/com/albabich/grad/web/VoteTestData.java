@@ -11,8 +11,8 @@ import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
 
 public class VoteTestData {
-    public static TestMatcher<VoteTo> VOTE_TO_MATCHER = TestMatcher.usingEqualsComparator(VoteTo.class);
-    public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Vote.class,"user","restaurant.menuItems");
+    public static MatcherFactory<VoteTo> VOTE_TO_MATCHER = MatcherFactory.usingEqualsComparator(VoteTo.class);
+    public static final MatcherFactory<Vote> VOTE_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class,"user","restaurant.menuItems");
 
     public static final int VOTE1_ID = START_SEQ + 22;
     public static final int NOT_FOUND = 10;
