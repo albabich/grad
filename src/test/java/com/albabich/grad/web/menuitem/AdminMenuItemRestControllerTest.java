@@ -31,7 +31,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/" + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -42,7 +42,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
     @Test
     void createWithLocation() throws Exception {
         MenuItem newMenuItem = getNew();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "/" + REST1_ID + "/menu-items/")
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/menu-items/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newMenuItem))
                 .with(userHttpBasic(admin)))
@@ -60,7 +60,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         MenuItem updated = getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_URL + "/" + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(admin)))
@@ -72,7 +72,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + "/" + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
 
@@ -82,7 +82,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + "/" + REST1_ID + "/menu-items/" + NOT_FOUND)
+        perform(MockMvcRequestBuilders.delete(REST_URL + REST1_ID + "/menu-items/" + NOT_FOUND)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isUnprocessableEntity());
     }
