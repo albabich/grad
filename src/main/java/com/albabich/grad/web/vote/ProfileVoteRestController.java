@@ -1,9 +1,11 @@
 package com.albabich.grad.web.vote;
 
 import com.albabich.grad.model.Vote;
+import com.albabich.grad.repository.RestaurantRepository;
 import com.albabich.grad.repository.UserRepository;
 import com.albabich.grad.repository.VoteRepository;
 import com.albabich.grad.util.VoteUtil;
+import com.albabich.grad.util.exception.NotFoundException;
 import com.albabich.grad.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +32,12 @@ public class ProfileVoteRestController {
 
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public ProfileVoteRestController(VoteRepository voteRepository, UserRepository userRepository) {
+    public ProfileVoteRestController(VoteRepository voteRepository, UserRepository userRepository, RestaurantRepository restaurantRepository) {
         this.voteRepository = voteRepository;
         this.userRepository = userRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @GetMapping("/today")
@@ -43,18 +47,19 @@ public class ProfileVoteRestController {
     }
 
     @Transactional
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> createWithLocation(@Valid @RequestBody Vote vote) {
+    @PostMapping(value = "/for")
+    public ResponseEntity<Vote> createWithLocation(@RequestParam int restaurantId) {
         checkVoteAbility();
-        int userId = SecurityUtil.authUserId();
-        log.info("create vote {} for user {}", vote, userId);
-        checkNew(vote);
-        Assert.notNull(vote, "vote must not be null");
-        vote.setDate(LocalDate.now());
+//        int userId = SecurityUtil.authUserId();
+        int userId = 100000;
+        Vote vote = new Vote(LocalDate.now(), restaurantRepository.getOne(restaurantId));
+        log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
         vote.setUser(userRepository.getOne(userId));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
+        System.out.println("----" + todayVote);
         if (todayVote != null) {
+            vote.setId(todayVote.id());
             update(vote, todayVote.id());
             return null;
         }
@@ -67,10 +72,11 @@ public class ProfileVoteRestController {
     }
 
     @Transactional
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@Valid @RequestBody Vote vote, @PathVariable int id) {
+//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(Vote vote, int id) {
         checkVoteAbility();
-        int userId = SecurityUtil.authUserId();
+//        int userId = SecurityUtil.authUserId();
+        int userId = 100000;
         log.info("update vote {} for user {}", vote, userId);
         Assert.notNull(vote, "vote must not be null");
         assureIdConsistent(vote, id);

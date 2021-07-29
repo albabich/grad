@@ -10,7 +10,7 @@ import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
 
 public class MenuItemTestData {
-    public static final MatcherFactory<MenuItem> MENU_ITEM_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant");;
+    public static final MatcherFactory.Matcher<MenuItem> MENU_ITEM_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant");;
 
     public static final int NOT_FOUND = 10;
     public static final int MENU_ITEM1_ID = START_SEQ + 7;

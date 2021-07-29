@@ -14,11 +14,11 @@ import static java.time.LocalDate.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class VoteTestData {
-    public static MatcherFactory<VoteTo> VOTE_TO_MATCHER = MatcherFactory.usingEqualsComparator(VoteTo.class);
-    public static MatcherFactory<Map> VOTE_RESULTS_MATCHER = MatcherFactory.usingAssertions(Map.class,
+    public static MatcherFactory.Matcher<VoteTo> VOTE_TO_MATCHER = MatcherFactory.usingEqualsComparator(VoteTo.class);
+    public static MatcherFactory.Matcher<Map> VOTE_RESULTS_MATCHER = MatcherFactory.usingAssertions(Map.class,
             (a, e) -> assertThat(a).isEqualTo(e),
             (a, e) -> assertThat(a).isEqualTo(e));
-    public static final MatcherFactory<Vote> VOTE_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant.menuItems");
+    public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant.menuItems");
 
     public static final int VOTE1_ID = START_SEQ + 22;
     public static final int NOT_FOUND = 10;

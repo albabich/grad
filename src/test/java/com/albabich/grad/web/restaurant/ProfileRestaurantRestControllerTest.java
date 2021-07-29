@@ -1,14 +1,12 @@
 package com.albabich.grad.web.restaurant;
 
 import com.albabich.grad.web.AbstractControllerTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.albabich.grad.web.RestaurantTestData.*;
+import static com.albabich.grad.web.RestaurantTestData.REST_WITH_MENU_ITEMS_MATCHER;
+import static com.albabich.grad.web.RestaurantTestData.restaurantsWithMenuToday;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
 import static com.albabich.grad.web.UserTestData.user1;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
