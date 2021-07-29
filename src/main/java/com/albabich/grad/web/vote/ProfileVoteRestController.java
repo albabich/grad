@@ -51,9 +51,11 @@ public class ProfileVoteRestController {
     public ResponseEntity<Vote> createWithLocation(@RequestParam int restaurantId) {
         checkVoteAbility();
         int userId = SecurityUtil.authUserId();
-        Vote vote = new Vote(LocalDate.now(), restaurantRepository.getOne(restaurantId));
+        Vote vote = new Vote(null, LocalDate.now());
+
         log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
         vote.setUser(userRepository.getOne(userId));
+        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
         if (todayVote != null) {

@@ -45,8 +45,8 @@ VALUES (100004, current_timestamp, 'салат', 25000),
        (100006, '2021-03-24', 'пиво', 35000);
 
 INSERT INTO vote (user_id, date, restaurant_id)
-VALUES (100000, '2021-05-01', 100004),
-       (100001, current_timestamp, 100005),
+VALUES (100000, current_timestamp, 100004),
+       (100001, '2021-04-5', 100005),
        (100002, current_timestamp, 100005),
        (100003, current_timestamp, 100006),
        (100000, '2021-04-6', 100005),

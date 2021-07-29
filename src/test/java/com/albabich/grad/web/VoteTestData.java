@@ -9,6 +9,8 @@ import java.util.Map;
 
 import static com.albabich.grad.model.AbstractBaseEntity.START_SEQ;
 import static com.albabich.grad.web.RestaurantTestData.*;
+import static com.albabich.grad.web.UserTestData.user1;
+import static com.albabich.grad.web.UserTestData.user2;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,13 +33,20 @@ public class VoteTestData {
     public static final Vote vote6 = new Vote(VOTE1_ID + 5, of(2021, Month.APRIL, 6), rest3);
 
     public static Vote getNew() {
-        return new Vote(null, now(), rest1);
+        return new Vote(null, now());
     }
 
+    public static final Vote newVote = getNew();
+    public static final Vote newVote2 = getNew();
     public static final Map<String, Integer> voteResultToday = new HashMap<>();
 
     static {
-        voteResultToday.put("Munhell", 2);
+        newVote.setUser(user1);
+        newVote.setRestaurant(rest1);
+        newVote2.setUser(user2);
+        newVote2.setRestaurant(rest3);
+        voteResultToday.put("Хачапури и вино", 1);
         voteResultToday.put("Kwakinn", 1);
+        voteResultToday.put("Munhell", 1);
     }
 }
