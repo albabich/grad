@@ -50,18 +50,14 @@ public class ProfileVoteRestController {
     @PostMapping(value = "/for")
     public ResponseEntity<Vote> createWithLocation(@RequestParam int restaurantId) {
         checkVoteAbility();
-//        int userId = SecurityUtil.authUserId();
-        int userId = 100000;
+        int userId = SecurityUtil.authUserId();
         Vote vote = new Vote(LocalDate.now(), restaurantRepository.getOne(restaurantId));
         log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
         vote.setUser(userRepository.getOne(userId));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
-        System.out.println("----" + todayVote);
         if (todayVote != null) {
             vote.setId(todayVote.id());
-            update(vote, todayVote.id());
-            return null;
         }
 
         Vote created = voteRepository.save(vote);
@@ -69,27 +65,5 @@ public class ProfileVoteRestController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @Transactional
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(Vote vote, int id) {
-        checkVoteAbility();
-//        int userId = SecurityUtil.authUserId();
-        int userId = 100000;
-        log.info("update vote {} for user {}", vote, userId);
-        Assert.notNull(vote, "vote must not be null");
-        assureIdConsistent(vote, id);
-        if (get(vote.getId(), userId) != null) {
-            vote.setDate(LocalDate.now());
-            vote.setUser(userRepository.getOne(userId));
-            voteRepository.save(vote);
-        }
-    }
-
-    public Vote get(int id, int userId) {
-        return voteRepository.findById(id)
-                .filter(vote -> vote.getUser().getId() == userId)
-                .orElse(null);
     }
 }
