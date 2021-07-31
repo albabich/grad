@@ -10,10 +10,10 @@ FROM restaurant;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
-VALUES ('Admin', 'admin@gmail.com', '{noop}admin'),
-       ('User1', 'user1@mail.ru', '{noop}password'),
-       ('User2', 'user2@mail.ru', '{noop}password'),
-       ('User3', 'user3@mail.ru', '{noop}password');
+VALUES ('Admin', 'admin@gmail.com', 'admin'),
+       ('User1', 'user1@mail.ru', 'password1'),
+       ('User2', 'user2@mail.ru', 'password2'),
+       ('User3', 'user3@mail.ru', 'password3');
 
 INSERT INTO user_role (role, user_id)
 VALUES ('ADMIN', 100000),
