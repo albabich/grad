@@ -4,23 +4,23 @@ import java.time.LocalDate;
 
 public class VoteTo {
 
-    private LocalDate date;
+//    private LocalDate date;
 //    private final String userName;
     private final String restaurantName;
 
-    public VoteTo(LocalDate date, String restaurantName) {
-        this.date = date;
+    public VoteTo( String restaurantName) {
+//        this.date = date;
 //        this.userName = userName;
         this.restaurantName = restaurantName;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
+//    public LocalDate getDate() {
+//        return date;
+//    }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+//    public void setDate(LocalDate date) {
+//        this.date = date;
+//    }
 
     public String getRestaurantName() {
         return restaurantName;
@@ -33,7 +33,7 @@ public class VoteTo {
     @Override
     public String toString() {
         return "VoteTo{" +
-                "date=" + date +
+//                "date=" + date +
 //                ", userName='" + userName + '\'' +
                 ", restaurantName='" + restaurantName + '\'' +
                 '}';
