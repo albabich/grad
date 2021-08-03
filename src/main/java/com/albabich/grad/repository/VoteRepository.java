@@ -17,9 +17,4 @@ public interface VoteRepository extends JpaRepository<Vote,Integer> {
 
     @Query("SELECT v from Vote v WHERE  v.date=?1")
     List<Vote> findAllByDate(LocalDate date);
-
-    //    https://stackoverflow.com/a/46013654/548473
-    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT v from Vote v WHERE v.id=?1")
-    Vote getWithUser(int id);
 }

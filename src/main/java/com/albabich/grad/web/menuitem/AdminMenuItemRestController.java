@@ -27,8 +27,8 @@ public class AdminMenuItemRestController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminMenuItemRestController.class);
 
-    private MenuItemRepository menuItemRepository;
-    private RestaurantRepository restaurantRepository;
+    private final MenuItemRepository menuItemRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public AdminMenuItemRestController(MenuItemRepository menuItemRepository, RestaurantRepository restaurantRepository) {
         this.menuItemRepository = menuItemRepository;
