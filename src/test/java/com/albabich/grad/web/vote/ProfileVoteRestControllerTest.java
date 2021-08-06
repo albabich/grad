@@ -12,6 +12,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.albabich.grad.web.RestaurantTestData.REST1_ID;
 import static com.albabich.grad.web.RestaurantTestData.REST3_ID;
+import static com.albabich.grad.web.TestUtil.userHttpBasic;
+import static com.albabich.grad.web.UserTestData.user1;
+import static com.albabich.grad.web.UserTestData.user2;
 import static com.albabich.grad.web.VoteTestData.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,8 +30,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
     void createWithLocation() throws Exception {
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "for?restaurantId=" + REST1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-//                .with(userHttpBasic(user1))
-        )
+                .with(userHttpBasic(user1)))
                 .andDo(print());
         Vote newVote = VoteTestData.newVote;
 
@@ -43,8 +45,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
     void createWithLocationIfExist() throws Exception {
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "for?restaurantId=" + REST3_ID)
                         .contentType(MediaType.APPLICATION_JSON)
-//                .with(userHttpBasic(user2))
-        )
+                .with(userHttpBasic(user2)))
                 .andDo(print());
         Vote newVote = VoteTestData.newVote2;
 
@@ -56,14 +57,9 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void update() throws Exception {
-    }
-
-    @Test
     void getResultsToday() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "today")
-//                .with(userHttpBasic(user1))
-        )
+                .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

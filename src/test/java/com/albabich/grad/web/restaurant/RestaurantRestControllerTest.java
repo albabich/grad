@@ -7,6 +7,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.albabich.grad.web.RestaurantTestData.REST_WITH_MENU_ITEMS_MATCHER;
 import static com.albabich.grad.web.RestaurantTestData.restaurantsWithMenuToday;
+import static com.albabich.grad.web.TestUtil.userHttpBasic;
+import static com.albabich.grad.web.UserTestData.user1;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,8 +27,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void getAllWithMenuItemsToday() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL+"with-menu/today")
-//                .with(userHttpBasic(user1))
-        )
+                .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

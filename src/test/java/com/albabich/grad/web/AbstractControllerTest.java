@@ -20,8 +20,6 @@ import java.util.Locale;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-//import com.albabich.grad.AllActiveProfileResolver;
-
 @SpringJUnitWebConfig(locations = {
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-mvc.xml",
@@ -51,7 +49,7 @@ public abstract class AbstractControllerTest {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
-//                .apply(springSecurity())
+                .apply(springSecurity())
                 .build();
     }
 

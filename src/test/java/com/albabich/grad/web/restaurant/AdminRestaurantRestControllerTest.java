@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.NoSuchElementException;
 
 import static com.albabich.grad.web.RestaurantTestData.*;
+import static com.albabich.grad.web.TestUtil.userHttpBasic;
+import static com.albabich.grad.web.UserTestData.admin;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,8 +29,7 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + REST2_ID)
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -38,8 +39,7 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL)
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -49,8 +49,7 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + REST3_ID)
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
         assertThrows(NoSuchElementException.class, () -> restaurantRepository.findById(REST3_ID).orElseThrow());
@@ -62,8 +61,7 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newRestaurant))
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andDo(print());
 
         Restaurant created = REST_MATCHER.readFromJson(action);
@@ -78,8 +76,7 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
         Restaurant updated = getUpdated();
         perform(MockMvcRequestBuilders.put(REST_URL + REST3_ID).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 

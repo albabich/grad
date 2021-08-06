@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static com.albabich.grad.util.ValidationUtil.checkNotFoundWithId;
 import static com.albabich.grad.web.MenuItemTestData.*;
 import static com.albabich.grad.web.RestaurantTestData.REST1_ID;
+import static com.albabich.grad.web.TestUtil.userHttpBasic;
+import static com.albabich.grad.web.UserTestData.admin;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -29,8 +31,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
     @Test
     void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -43,8 +44,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/menu-items/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newMenuItem))
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andDo(print());
 
         MenuItem created = MENU_ITEM_MATCHER.readFromJson(action);
@@ -62,8 +62,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
 
         MenuItem actualMenuItem = menuItemRepository.findById(MENU_ITEM1_ID).orElse(null);
@@ -73,8 +72,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
     @Test
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
 
         MenuItem deleted = menuItemRepository.findById(MENU_ITEM1_ID).orElse(null);
@@ -84,8 +82,7 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
     @Test
     void deleteNotFound() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + REST1_ID + "/menu-items/" + NOT_FOUND)
-//                .with(userHttpBasic(admin))
-        )
+                .with(userHttpBasic(admin)))
                 .andExpect(status().isUnprocessableEntity());
     }
 }
