@@ -5,14 +5,13 @@ import com.albabich.grad.to.VoteTo;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VoteUtil {
 
     public static List<VoteTo> getTos(Collection<Vote> votes) {
         return votes.stream()
                 .map(VoteUtil::createTo)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static VoteTo createTo(Vote vote) {

@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class ProfileRestaurantRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = ProfileRestaurantRestController.REST_URL + '/';
+class RestaurantRestControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = RestaurantRestController.REST_URL + '/';
 
 //    @Autowired
 //    private CacheManager cacheManager;

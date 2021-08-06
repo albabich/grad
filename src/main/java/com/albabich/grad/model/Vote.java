@@ -16,16 +16,12 @@ public class Vote extends AbstractBaseEntity {
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @BatchSize(size = 200)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
     public Vote() {
-    }
-
-    public Vote(LocalDate date,Restaurant restaurant) {
-        this(null, date,restaurant);
     }
 
     public Vote(Integer id, LocalDate date) {

@@ -14,15 +14,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = ProfileRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProfileRestaurantRestController {
-    static final String REST_URL = "/rest/profile/restaurants";
+@RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantRestController {
+    static final String REST_URL = "/rest/restaurants";
 
-    private static final Logger log = LoggerFactory.getLogger(ProfileRestaurantRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(RestaurantRestController.class);
 
     private final RestaurantRepository restaurantRepository;
 
-    public ProfileRestaurantRestController(RestaurantRepository restaurantRepository) {
+    public RestaurantRestController(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 

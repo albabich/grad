@@ -4,8 +4,6 @@ import com.albabich.grad.model.Vote;
 import com.albabich.grad.repository.RestaurantRepository;
 import com.albabich.grad.repository.UserRepository;
 import com.albabich.grad.repository.VoteRepository;
-import com.albabich.grad.to.VoteTo;
-import com.albabich.grad.util.VoteUtil;
 import com.albabich.grad.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.List;
 
-import static com.albabich.grad.util.ValidationUtil.checkVoteAbility;
+import static com.albabich.grad.util.ValidationUtil.*;
 
 @RestController
 @RequestMapping(value = ProfileVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,12 +35,6 @@ public class ProfileVoteRestController {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @GetMapping("/today")
-    public List<VoteTo> getToday() {
-        log.info("getByDate {}", LocalDate.now());
-        return VoteUtil.getTos(voteRepository.findAllByDate(LocalDate.now()));
-    }
-
     @Transactional
     @PostMapping(value = "/for")
     public ResponseEntity<Vote> createWithLocation(@RequestParam int restaurantId) {
@@ -53,7 +44,7 @@ public class ProfileVoteRestController {
 
         log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
         vote.setUser(userRepository.getOne(userId));
-        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
+        vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId).orElse(null),restaurantId));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
         if (todayVote != null) {

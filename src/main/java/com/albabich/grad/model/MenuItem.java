@@ -34,10 +34,6 @@ public class MenuItem extends AbstractNamedEntity {
         this(menuItem1.id, menuItem1.date, menuItem1.name, menuItem1.price);
     }
 
-    public MenuItem( String name, int price) {
-        this(null, null, name, price);
-    }
-
     public MenuItem(Integer id, LocalDate date, String name, int price) {
         super(id, name);
         this.date = date;
