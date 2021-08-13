@@ -1,12 +1,10 @@
 package com.albabich.grad.model;
 
-import com.albabich.grad.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -17,14 +15,16 @@ public class MenuItem extends AbstractNamedEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     //    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
-    @NotNull(groups = View.Persist.class)
+    @NotNull
     private Restaurant restaurant;
 
     @Column(name = "date", nullable = false)
+    @NotNull
     private LocalDate date;
 
     @Column(name = "price", nullable = false)
     @NotNull
+    @Range(min = 1)
     int price;
 
     public MenuItem() {

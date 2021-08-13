@@ -3,6 +3,7 @@ package com.albabich.grad.model;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -11,14 +12,17 @@ public class Vote extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
     private User user;
 
     @Column(name = "date")
+    @NotNull
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @BatchSize(size = 200)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @NotNull
     private Restaurant restaurant;
 
     public Vote() {
