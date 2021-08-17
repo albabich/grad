@@ -1,6 +1,5 @@
 package com.albabich.grad.web.restaurant;
 
-import com.albabich.grad.View;
 import com.albabich.grad.model.Restaurant;
 import com.albabich.grad.repository.RestaurantRepository;
 import com.albabich.grad.to.RestaurantTo;
@@ -12,11 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class AdminRestaurantRestController {
 
     @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@Validated(View.Web.class) @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
         checkNew(restaurant);
         Assert.notNull(restaurant, "restaurant must not be null");
@@ -71,7 +69,7 @@ public class AdminRestaurantRestController {
     @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Validated(View.Web.class) @RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update {}", restaurant);
         assureIdConsistent(restaurant, id);
         Assert.notNull(restaurant, "restaurant must not be null");

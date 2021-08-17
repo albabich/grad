@@ -25,7 +25,7 @@ public class MenuItem extends AbstractNamedEntity {
     @Column(name = "price", nullable = false)
     @NotNull
     @Range(min = 1)
-    int price;
+    private int price;
 
     public MenuItem() {
     }

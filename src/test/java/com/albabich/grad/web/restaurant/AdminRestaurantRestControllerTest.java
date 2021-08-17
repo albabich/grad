@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.NoSuchElementException;
 
+import static com.albabich.grad.web.MenuItemTestData.NOT_FOUND;
 import static com.albabich.grad.web.RestaurantTestData.*;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
 import static com.albabich.grad.web.UserTestData.admin;
@@ -37,6 +38,14 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL +  NOT_FOUND)
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL)
                 .with(userHttpBasic(admin)))
@@ -53,6 +62,14 @@ public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
         assertThrows(NoSuchElementException.class, () -> restaurantRepository.findById(REST3_ID).orElseThrow());
+    }
+
+    @Test
+    void deleteNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.delete(REST_URL +  NOT_FOUND)
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

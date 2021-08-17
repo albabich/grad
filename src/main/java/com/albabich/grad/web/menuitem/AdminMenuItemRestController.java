@@ -3,6 +3,8 @@ package com.albabich.grad.web.menuitem;
 import com.albabich.grad.model.MenuItem;
 import com.albabich.grad.repository.MenuItemRepository;
 import com.albabich.grad.repository.RestaurantRepository;
+import com.albabich.grad.to.MenuItemTo;
+import com.albabich.grad.util.MenuItemUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -37,7 +39,7 @@ public class AdminMenuItemRestController {
 
     @GetMapping("/{restaurantId}/menu-items/{id}")
     public MenuItem get(@PathVariable int id, @PathVariable int restaurantId) {
-        log.info("get menuItem {} for restaurant {}", id, restaurantId);
+        log.info("get menuItemTo {} for restaurant {}", id, restaurantId);
         MenuItem menuItem = menuItemRepository.findById(id)
                 .filter(mItem -> mItem.getRestaurant().getId() == restaurantId)
                 .orElse(null);
@@ -47,10 +49,11 @@ public class AdminMenuItemRestController {
     @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @Transactional
     @PostMapping(value = "/{restaurantId}/menu-items", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItem menuItem, @PathVariable int restaurantId) {
-        log.info("create menuItem {} for restaurant {}", menuItem, restaurantId);
-        Assert.notNull(menuItem, "menuItem must not be null");
-        checkNew(menuItem);
+    public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItemTo menuItemTo, @PathVariable int restaurantId) {
+        log.info("create menuItem{} for restaurant {}", menuItemTo, restaurantId);
+        Assert.notNull(menuItemTo, "menuItemTo must not be null");
+        checkNew(menuItemTo);
+        MenuItem menuItem = MenuItemUtil.createNewFromTo(menuItemTo);
         menuItem.setRestaurant(restaurantRepository.getOne(restaurantId));
         menuItem.setDate(LocalDate.now());
         MenuItem created = menuItemRepository.save(menuItem);
@@ -64,10 +67,12 @@ public class AdminMenuItemRestController {
     @Transactional
     @PutMapping(value = "/{restaurantId}/menu-items/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody MenuItem menuItem, @PathVariable int id, @PathVariable int restaurantId) {
-        log.info("update menuItem {} for restaurant {}", menuItem, restaurantId);
-        Assert.notNull(menuItem, "menuItem must not be null");
-        assureIdConsistent(menuItem, id);
+    public void update(@Valid @RequestBody MenuItemTo menuItemTo, @PathVariable int id, @PathVariable int restaurantId) {
+        log.info("update menuItemTo {} for restaurant {}", menuItemTo, restaurantId);
+        Assert.notNull(menuItemTo, "menuItemTo must not be null");
+        assureIdConsistent(menuItemTo, id);
+        MenuItem menuItem = get(menuItemTo.id(), restaurantId);
+        MenuItemUtil.updateFromTo(menuItem,menuItemTo);
         menuItem.setRestaurant(restaurantRepository.getOne(restaurantId));
         menuItemRepository.save(menuItem);
     }
@@ -76,7 +81,7 @@ public class AdminMenuItemRestController {
     @DeleteMapping("/{restaurantId}/menu-items/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete( @PathVariable int id, @PathVariable int restaurantId) {
-        log.info("delete menuItem {} for restaurant {}", id, restaurantId);
+        log.info("delete menuItemTo {} for restaurant {}", id, restaurantId);
         checkNotFoundWithId(menuItemRepository.delete(id, restaurantId)!= 0, id);
     }
 }
