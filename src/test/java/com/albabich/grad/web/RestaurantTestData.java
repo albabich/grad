@@ -24,7 +24,7 @@ public class RestaurantTestData {
     public static final int REST2_ID = START_SEQ + 5;
     public static final int REST3_ID = START_SEQ + 6;
 
-    public static final Restaurant rest1 = new Restaurant(REST1_ID, "Хачапури и вино");
+    public static final Restaurant rest1 = new Restaurant(REST1_ID, "Khachapuri and Wine");
     public static final Restaurant rest2 = new Restaurant(REST2_ID, "Munhell");
     public static final Restaurant rest3 = new Restaurant(REST3_ID, "Kwakinn");
     public static final List<Restaurant> restaurants = List.of(rest1, rest2, rest3);

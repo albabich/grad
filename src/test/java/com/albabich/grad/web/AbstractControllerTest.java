@@ -1,6 +1,5 @@
 package com.albabich.grad.web;
 
-import com.albabich.grad.util.exception.ErrorType;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -59,10 +58,6 @@ public abstract class AbstractControllerTest {
 
     private String getMessage(String code) {
         return messageSourceAccessor.getMessage(code, Locale.ENGLISH);
-    }
-
-    public ResultMatcher errorType(ErrorType type) {
-        return jsonPath("$.type").value(type.name());
     }
 
     public ResultMatcher detailMessage(String code) {

@@ -23,26 +23,26 @@ VALUES ('ADMIN', 100000),
        ('USER', 100003);
 
 INSERT INTO restaurant (name)
-VALUES ('Хачапури и вино'),
+VALUES ('Khachapuri and Wine'),
        ('Munhell'),
        ('Kwakinn');
 
 INSERT INTO menu_item (restaurant_id, date, name, price)
-VALUES (100004, current_timestamp, 'салат', 25000),
-       (100004, current_timestamp, 'хачапури', 28000),
-       (100004, current_timestamp, 'лобио', 20000),
-       (100004, '2021-03-24', 'пхали', 5000),
-       (100004, '2021-03-24', 'вино', 26000),
-       (100005, '2021-03-24', 'салат', 23050),
-       (100005, '2021-03-24', 'ребрышки BBQ', 55050),
-       (100005, current_timestamp, 'стейк', 75050),
-       (100005, '2021-03-24', 'шашлык', 45000),
-       (100005, '2021-03-24', 'пиво', 29000),
-       (100006, '2021-03-24', 'салат', 20000),
-       (100006, '2021-03-24', 'рулька', 65000),
-       (100006, current_timestamp, 'курица', 45000),
-       (100006, '2021-03-24', 'стейк рибай', 95000),
-       (100006, '2021-03-24', 'пиво', 35000);
+VALUES (100004, current_timestamp, 'salad', 25000),
+       (100004, current_timestamp, 'khachapuri', 28000),
+       (100004, current_timestamp, 'lobio', 20000),
+       (100004, '2021-03-24', 'phali', 5000),
+       (100004, '2021-03-24', 'wine', 26000),
+       (100005, '2021-03-24', 'salad', 23050),
+       (100005, '2021-03-24', 'ribs BBQ', 55050),
+       (100005, current_timestamp, 'steak', 75050),
+       (100005, '2021-03-24', 'shashlik', 45000),
+       (100005, '2021-03-24', 'beer', 29000),
+       (100006, '2021-03-24', 'salad', 20000),
+       (100006, '2021-03-24', 'pork knuckle', 65000),
+       (100006, current_timestamp, 'chicken', 45000),
+       (100006, '2021-03-24', 'rib eye steak', 95000),
+       (100006, '2021-03-24', 'beer', 35000);
 
 INSERT INTO vote (user_id, date, restaurant_id)
 VALUES (100000, current_timestamp, 100004),
