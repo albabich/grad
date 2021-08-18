@@ -4,9 +4,11 @@ import com.albabich.grad.model.Restaurant;
 import com.albabich.grad.repository.RestaurantRepository;
 import com.albabich.grad.to.RestaurantTo;
 import com.albabich.grad.util.RestaurantUtil;
+import com.albabich.grad.util.exception.IllegalRequestDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ import static com.albabich.grad.util.ValidationUtil.*;
 @RestController
 @RequestMapping(value = AdminRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestaurantRestController {
-   public static final String REST_URL = "/rest/admin/restaurants";
+    public static final String REST_URL = "/rest/admin/restaurants";
 
     private static final Logger log = LoggerFactory.getLogger(AdminRestaurantRestController.class);
 
@@ -57,13 +59,17 @@ public class AdminRestaurantRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
-        checkNew(restaurant);
-        Assert.notNull(restaurant, "restaurant must not be null");
-        Restaurant created = restaurantRepository.save(restaurant);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        try {
+            checkNew(restaurant);
+            Assert.notNull(restaurant, "restaurant must not be null");
+            Restaurant created = restaurantRepository.save(restaurant);
+            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_URL + "/{id}")
+                    .buildAndExpand(created.getId()).toUri();
+            return ResponseEntity.created(uriOfNewResource).body(created);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalRequestDataException("You already have restaurant with this name");
+        }
     }
 
     @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
@@ -71,8 +77,12 @@ public class AdminRestaurantRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update {}", restaurant);
-        assureIdConsistent(restaurant, id);
-        Assert.notNull(restaurant, "restaurant must not be null");
-        checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.id());
+        try {
+            assureIdConsistent(restaurant, id);
+            Assert.notNull(restaurant, "restaurant must not be null");
+            checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.id());
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalRequestDataException("You already have restaurant with this name");
+        }
     }
 }

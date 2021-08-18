@@ -2,7 +2,6 @@ package com.albabich.grad.util;
 
 
 import com.albabich.grad.HasId;
-import com.albabich.grad.model.AbstractBaseEntity;
 import com.albabich.grad.util.exception.ErrorType;
 import com.albabich.grad.util.exception.IllegalRequestDataException;
 import com.albabich.grad.util.exception.NotFoundException;
@@ -43,8 +42,17 @@ public class ValidationUtil {
         return object;
     }
 
+    public static <T> T checkNotFoundWithId(T object, int id, int forId) {
+        checkNotFoundWithId(object != null, id, forId);
+        return object;
+    }
+
     public static void checkNotFoundWithId(boolean found, int id) {
         checkNotFound(found, "id=" + id);
+    }
+
+    public static void checkNotFoundWithId(boolean found, int id, int forId) {
+        checkNotFound(found, "id=" + id + " for parent entity id=" + forId);
     }
 
     public static <T> T checkNotFound(T object, String msg) {
@@ -94,10 +102,10 @@ public class ValidationUtil {
         return rootCause;
     }
 
-    private static final LocalTime CLOSEVOTING = LocalTime.of(23,59);
+    private static final LocalTime CLOSEVOTING = LocalTime.of(23, 59);
 
-    public  static void checkVoteAbility(){
-        if(LocalTime.now().isAfter(CLOSEVOTING)) {
+    public static void checkVoteAbility() {
+        if (LocalTime.now().isAfter(CLOSEVOTING)) {
             throw new VoteException("You can vote until 11:00");
         }
     }

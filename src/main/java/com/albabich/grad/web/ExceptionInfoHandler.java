@@ -49,7 +49,7 @@ public class ExceptionInfoHandler {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler({BindException.class, ConstraintViolationException.class})
+    @ExceptionHandler(BindException.class)
     public ErrorInfo validationError(HttpServletRequest req, BindException e) {
         String[] details = e.getBindingResult().getFieldErrors().stream()
                 .map(error -> "[" + error.getField() + "] " + error.getDefaultMessage())

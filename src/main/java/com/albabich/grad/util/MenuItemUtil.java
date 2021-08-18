@@ -5,7 +5,7 @@ import com.albabich.grad.to.MenuItemTo;
 
 public class MenuItemUtil {
     public static MenuItem createNewFromTo(MenuItemTo menuItemTo) {
-        return new MenuItem(null, null, menuItemTo.getName(),menuItemTo.getPrice());
+        return new MenuItem(null, menuItemTo.getName(), menuItemTo.getPrice());
     }
 
     public static MenuItem updateFromTo(MenuItem menuItem, MenuItemTo menuItemTo) {

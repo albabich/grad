@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+import static java.time.LocalDate.now;
+
 @Entity
 @Table(name = "menu_item")
 public class MenuItem extends AbstractNamedEntity {
@@ -32,6 +34,10 @@ public class MenuItem extends AbstractNamedEntity {
 
     public MenuItem(MenuItem menuItem1) {
         this(menuItem1.id, menuItem1.date, menuItem1.name, menuItem1.price);
+    }
+
+    public MenuItem(Integer id, String name, int price) {
+        this(id, now(), name, price);
     }
 
     public MenuItem(Integer id, LocalDate date, String name, int price) {

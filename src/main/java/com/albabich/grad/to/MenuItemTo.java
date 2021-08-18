@@ -1,13 +1,10 @@
 package com.albabich.grad.to;
 
-import com.albabich.grad.model.Restaurant;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 public class MenuItemTo extends BaseTo {
     @NotBlank
