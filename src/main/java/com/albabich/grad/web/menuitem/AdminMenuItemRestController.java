@@ -5,7 +5,6 @@ import com.albabich.grad.repository.MenuItemRepository;
 import com.albabich.grad.repository.RestaurantRepository;
 import com.albabich.grad.to.MenuItemTo;
 import com.albabich.grad.util.MenuItemUtil;
-import com.albabich.grad.util.exception.IllegalRequestDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -26,6 +25,7 @@ import static com.albabich.grad.util.ValidationUtil.*;
 @RestController
 @RequestMapping(value = AdminMenuItemRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminMenuItemRestController {
+    protected static final String EXCEPTION_DUPLICATE_MENU_ITEM_MESSAGE = "You already have menuItem with this name for today";
     static final String REST_URL = "/rest/admin/restaurants";
 
     private static final Logger log = LoggerFactory.getLogger(AdminMenuItemRestController.class);
@@ -52,19 +52,20 @@ public class AdminMenuItemRestController {
     @PostMapping(value = "/{restaurantId}/menu-items", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItemTo menuItemTo, @PathVariable int restaurantId) {
         log.info("create menuItem{} for restaurant {}", menuItemTo, restaurantId);
-        try {
-            Assert.notNull(menuItemTo, "menuItemTo must not be null");
-            checkNew(menuItemTo);
-            MenuItem menuItem = MenuItemUtil.createNewFromTo(menuItemTo);
-            menuItem.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId).orElse(null), restaurantId));
-            MenuItem created = menuItemRepository.save(menuItem);
-            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path(REST_URL + "/" + restaurantId + "/menu-items" + "/{id}")
-                    .buildAndExpand(created.getId()).toUri();
-            return ResponseEntity.created(uriOfNewResource).body(created);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalRequestDataException("You already have menuItem with this name for today");
-        }
+//        try {
+        Assert.notNull(menuItemTo, "menuItemTo must not be null");
+        checkNew(menuItemTo);
+        MenuItem menuItem = MenuItemUtil.createNewFromTo(menuItemTo);
+        menuItem.setRestaurant(restaurantRepository.getOne(restaurantId));
+        MenuItem created = menuItemRepository.save(menuItem);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/" + restaurantId + "/menu-items" + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new DataIntegrityViolationException(EXCEPTION_DUPLICATE_MENU_ITEM_MESSAGE);
+//        }
+
     }
 
     @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
@@ -80,7 +81,7 @@ public class AdminMenuItemRestController {
             MenuItemUtil.updateFromTo(menuItem, menuItemTo);
             menuItemRepository.save(menuItem);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalRequestDataException("You already have menuItem with this name for today");
+            throw new DataIntegrityViolationException(EXCEPTION_DUPLICATE_MENU_ITEM_MESSAGE);
         }
     }
 

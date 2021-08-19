@@ -89,16 +89,6 @@ public class ValidationUtil {
         return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
     }
 
-//    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logStackTrace, ErrorType errorType) {
-//        Throwable rootCause = ValidationUtil.getRootCause(e);
-//        if (logStackTrace) {
-//            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
-//        } else {
-//            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
-//        }
-//        return rootCause;
-//    }
-
     private static final LocalTime CLOSEVOTING = LocalTime.of(23, 59);
 
     public static void checkVoteAbility() {

@@ -28,6 +28,7 @@ public class AdminRestaurantRestController {
     public static final String REST_URL = "/rest/admin/restaurants";
 
     private static final Logger log = LoggerFactory.getLogger(AdminRestaurantRestController.class);
+    protected static final String EXCEPTION_DUPLICATE_RESTAURANT_MESSAGE = "You already have restaurant with this name";
 
     private final RestaurantRepository restaurantRepository;
 
@@ -68,7 +69,7 @@ public class AdminRestaurantRestController {
                     .buildAndExpand(created.getId()).toUri();
             return ResponseEntity.created(uriOfNewResource).body(created);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalRequestDataException("You already have restaurant with this name");
+            throw new DataIntegrityViolationException(EXCEPTION_DUPLICATE_RESTAURANT_MESSAGE);
         }
     }
 
@@ -82,7 +83,7 @@ public class AdminRestaurantRestController {
             Assert.notNull(restaurant, "restaurant must not be null");
             checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.id());
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalRequestDataException("You already have restaurant with this name");
+            throw new DataIntegrityViolationException(EXCEPTION_DUPLICATE_RESTAURANT_MESSAGE);
         }
     }
 }

@@ -46,9 +46,9 @@ public class ExceptionInfoHandler {
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(BindException.class)
-    public ErrorInfo validationError(HttpServletRequest req, BindException e) {
+    public ErrorInfo bindValidationError(HttpServletRequest req, BindException e) {
         String[] details = e.getBindingResult().getFieldErrors().stream()
-                .map(error -> "[" + error.getField() + "] " + error.getDefaultMessage())
+                .map(fe -> String.format("[%s] %s", fe.getField(), fe.getDefaultMessage()))
                 .toArray(String[]::new);
         return logAndGetErrorInfo(req, e, details);
     }
@@ -62,7 +62,7 @@ public class ExceptionInfoHandler {
     //    https://stackoverflow.com/questions/538870/should-private-helper-methods-be-static-if-they-can-be-static
     public static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, String... details) {
         Throwable rootCause = ValidationUtil.getRootCause(e);
-        log.warn("{} at request  {}: {}", req.getRequestURL(), rootCause.toString());
+        log.warn("Error at request  {}: {}", req.getRequestURL(), rootCause.toString());
         return new ErrorInfo(req.getRequestURL(), details.length != 0 ? details : new String[]{ValidationUtil.getMessage(rootCause)});
     }
 }

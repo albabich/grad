@@ -24,6 +24,12 @@ public class MenuItemTo extends BaseTo {
         this.price = price;
     }
 
+    public MenuItemTo(String name, int price) {
+        super(null);
+        this.name = name;
+        this.price = price;
+    }
+
     public String getName() {
         return name;
     }

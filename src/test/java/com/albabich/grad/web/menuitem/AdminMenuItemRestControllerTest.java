@@ -2,6 +2,8 @@ package com.albabich.grad.web.menuitem;
 
 import com.albabich.grad.model.MenuItem;
 import com.albabich.grad.repository.MenuItemRepository;
+import com.albabich.grad.to.MenuItemTo;
+import com.albabich.grad.util.MenuItemUtil;
 import com.albabich.grad.util.exception.NotFoundException;
 import com.albabich.grad.web.AbstractControllerTest;
 import com.albabich.grad.web.json.JsonUtil;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.albabich.grad.util.ValidationUtil.checkNotFoundWithId;
 import static com.albabich.grad.web.MenuItemTestData.*;
@@ -47,10 +51,11 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        MenuItem newMenuItem = getNew();
+        MenuItemTo newMenuItemTo = new MenuItemTo("idaho potatoes", 28000);
+        MenuItem newMenuItem = MenuItemUtil.createNewFromTo(newMenuItemTo);
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/menu-items/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newMenuItem))
+                .content(JsonUtil.writeValue(newMenuItemTo))
                 .with(userHttpBasic(admin)))
                 .andDo(print());
 
@@ -65,15 +70,62 @@ class AdminMenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        MenuItem updated = getUpdated();
+        MenuItemTo updatedTo = new MenuItemTo(100007, "salad updated", 280);
         perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated))
+                .content(JsonUtil.writeValue(updatedTo))
                 .with(userHttpBasic(admin)))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andDo(print());
 
         MenuItem actualMenuItem = menuItemRepository.findById(MENU_ITEM1_ID).orElse(null);
-        MENU_ITEM_MATCHER.assertMatch(actualMenuItem, updated);
+        MENU_ITEM_MATCHER.assertMatch(actualMenuItem, MenuItemUtil.updateFromTo(new MenuItem(menuItem1), updatedTo));
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        MenuItemTo newMenuItemTo = new MenuItemTo("", 0);
+        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/menu-items/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMenuItemTo))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        MenuItemTo updatedTo = new MenuItemTo(100007, "", 280);
+        perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updatedTo))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        MenuItemTo newMenuItemTo = new MenuItemTo("salad", 150);
+        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/menu-items/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMenuItemTo))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        MenuItemTo updatedTo = new MenuItemTo(100007, "lobio", 280);
+        perform(MockMvcRequestBuilders.put(REST_URL + REST1_ID + "/menu-items/" + MENU_ITEM1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updatedTo))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isConflict());
     }
 
     @Test
