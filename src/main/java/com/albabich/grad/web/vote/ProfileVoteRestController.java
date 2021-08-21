@@ -44,7 +44,7 @@ public class ProfileVoteRestController {
 
         log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
         vote.setUser(userRepository.getOne(userId));
-        vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId).orElse(null),restaurantId));
+        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
         if (todayVote != null) {

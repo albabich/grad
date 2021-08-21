@@ -2,40 +2,27 @@ package com.albabich.grad.to;
 
 import java.time.LocalDate;
 
-public class VoteTo {
+public class VoteTo extends BaseTo{
 
-//    private LocalDate date;
-//    private final String userName;
-    private final String restaurantName;
+    private final int  restaurantId;
 
-    public VoteTo( String restaurantName) {
-//        this.date = date;
-//        this.userName = userName;
-        this.restaurantName = restaurantName;
+    public VoteTo(int id,  int restaurantId) {
+        super(id);
+        this.restaurantId = restaurantId;
     }
 
-//    public LocalDate getDate() {
-//        return date;
-//    }
 
-//    public void setDate(LocalDate date) {
-//        this.date = date;
-//    }
 
-    public String getRestaurantName() {
-        return restaurantName;
+    public int getRestaurantId() {
+        return restaurantId;
     }
-
-//    public String getUserName() {
-//        return userName;
-//    }
 
     @Override
     public String toString() {
         return "VoteTo{" +
-//                "date=" + date +
-//                ", userName='" + userName + '\'' +
-                ", restaurantName='" + restaurantName + '\'' +
+                "id=" + id +
+                ", restaurantId=" + restaurantId +
                 '}';
     }
 }
+
