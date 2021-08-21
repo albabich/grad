@@ -5,8 +5,6 @@ import com.albabich.grad.to.UserTo;
 import com.albabich.grad.util.UserUtil;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
-//    @Serial
-//    private static final long serialVersionUID = 1L;
 
     private UserTo userTo;
 
@@ -17,14 +15,6 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public int getId() {
         return userTo.getId();
-    }
-
-    public void update(UserTo newTo) {
-        userTo = newTo;
-    }
-
-    public UserTo getUserTo() {
-        return userTo;
     }
 
     @Override

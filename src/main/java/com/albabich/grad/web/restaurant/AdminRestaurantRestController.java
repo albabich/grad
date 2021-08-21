@@ -2,9 +2,6 @@ package com.albabich.grad.web.restaurant;
 
 import com.albabich.grad.model.Restaurant;
 import com.albabich.grad.repository.RestaurantRepository;
-import com.albabich.grad.to.RestaurantTo;
-import com.albabich.grad.util.RestaurantUtil;
-import com.albabich.grad.util.exception.IllegalRequestDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -37,9 +34,9 @@ public class AdminRestaurantRestController {
     }
 
     @GetMapping
-    public List<RestaurantTo> getAll() {
+    public List<Restaurant> getAll() {
         log.info("getAll");
-        return RestaurantUtil.getTos(restaurantRepository.findAll());
+        return restaurantRepository.findAll();
     }
 
     @GetMapping("/{id}")
