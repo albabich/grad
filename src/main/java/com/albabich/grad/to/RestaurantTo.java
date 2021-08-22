@@ -2,20 +2,15 @@ package com.albabich.grad.to;
 
 import java.beans.ConstructorProperties;
 
-public class RestaurantTo extends BaseTo{
-    private String name;
-    @ConstructorProperties({"id", "name"})
-    public RestaurantTo(int id, String name) {
+public class RestaurantTo extends BaseTo {
+    private final String name;
+    private final int votes;
+
+    @ConstructorProperties({"id", "name", "votes"})
+    public RestaurantTo(int id, String name, int votes) {
         this.id = id;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.votes = votes;
     }
 
     @Override
@@ -23,6 +18,7 @@ public class RestaurantTo extends BaseTo{
         return "RestaurantTo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", votesByDay=" + votes +
                 '}';
     }
 }

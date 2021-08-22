@@ -2,6 +2,8 @@ package com.albabich.grad.web.restaurant;
 
 import com.albabich.grad.model.Restaurant;
 import com.albabich.grad.repository.RestaurantRepository;
+import com.albabich.grad.to.RestaurantTo;
+import com.albabich.grad.util.RestaurantUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,5 +33,11 @@ public class RestaurantRestController {
     public List<Restaurant> getAllWithMenuItemsToday() {
         log.info("getAll with menuItems today");
         return restaurantRepository.getAllWithMenuItemsByDate(LocalDate.now());
+    }
+
+    @GetMapping("/with-votes/today")
+    public List<RestaurantTo> getAllWithVotesToday() {
+        log.info("getAll with votes today");
+        return RestaurantUtil.getTos(restaurantRepository.findAllByVoteDate(LocalDate.now()));
     }
 }

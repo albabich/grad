@@ -55,14 +55,4 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
         VOTE_MATCHER.assertMatch(created, newVote);
         VOTE_MATCHER.assertMatch(voteRepository.getOne(newId), newVote);
     }
-
-    @Test
-    void getResultsToday() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "today")
-                .with(userHttpBasic(user1)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_RESULTS_MATCHER.contentJson(voteResultToday));
-    }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -20,4 +21,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Modifying
     @Query("DELETE FROM Restaurant r WHERE r.id=:id ")
     int delete(@Param("id") int id);
+
+    @Query("SELECT DISTINCT(r) FROM Restaurant r JOIN FETCH  r.votes m WHERE m.date=?1")
+    Collection<Restaurant> findAllByVoteDate(@Param("date") LocalDate localDate);
 }
