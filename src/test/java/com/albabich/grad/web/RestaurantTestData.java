@@ -1,23 +1,25 @@
 package com.albabich.grad.web;
 
 import com.albabich.grad.model.Restaurant;
+import com.albabich.grad.to.RestaurantTo;
 
 import java.util.List;
 
 import static com.albabich.grad.model.AbstractBaseEntity.START_SEQ;
 import static com.albabich.grad.web.MenuItemTestData.*;
+import static com.albabich.grad.web.VoteTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantTestData {
-    public static final MatcherFactory.Matcher<Restaurant> REST_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems");
+    public static final MatcherFactory.Matcher<Restaurant> REST_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems", "votes", "$$_hibernate_interceptor");
+    public static final MatcherFactory.Matcher<RestaurantTo> REST_TO_WITH_VOTES_MATCHER = MatcherFactory.usingEqualsComparator(RestaurantTo.class);
     public static final MatcherFactory.Matcher<Restaurant> REST_WITH_MENU_ITEMS_MATCHER = MatcherFactory.usingAssertions(Restaurant.class,
 //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
             (a, e) -> {
                 throw new UnsupportedOperationException();
             },
             (a, e) -> assertThat(a).usingRecursiveComparison()
-                    .ignoringFields("menuItems.restaurant").isEqualTo(e));
-
+                    .ignoringFields("menuItems.restaurant", "votes").isEqualTo(e));
 
     public static final int NOT_FOUND = 10;
     public static final int REST1_ID = START_SEQ + 4;
@@ -33,6 +35,9 @@ public class RestaurantTestData {
         rest1.setMenuItems(menuItemsRest1Today);
         rest2.setMenuItems(menuItemsRest2Today);
         rest3.setMenuItems(menuItemsRest3Today);
+        rest1.setVotes(voteRest1Today);
+        rest2.setVotes(voteRest2Today);
+        rest3.setVotes(voteRest3Today);
     }
 
     public static final List<Restaurant> restaurantsWithMenuToday = List.of(rest1, rest2, rest3);

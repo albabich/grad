@@ -5,6 +5,7 @@ import com.albabich.grad.model.Vote;
 import com.albabich.grad.repository.RestaurantRepository;
 import com.albabich.grad.repository.UserRepository;
 import com.albabich.grad.repository.VoteRepository;
+import com.albabich.grad.to.VoteTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -12,11 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 
@@ -40,15 +42,16 @@ public class ProfileVoteRestController {
     }
 
     @Transactional
-    @PostMapping(value = "/for")
-    public ResponseEntity<Vote> createWithLocation(@RequestParam int restaurantId, @AuthenticationPrincipal AuthorizedUser authUser) {
+    @PostMapping()
+    public ResponseEntity<Vote> createWithLocation(@RequestBody @Valid VoteTo voteTo, @AuthenticationPrincipal AuthorizedUser authUser) {
         checkVoteAbility();
         int userId = authUser.getId();
-        Vote vote = new Vote(null, LocalDate.now());
+        int restaurantId = voteTo.getRestaurantId();
+        Vote vote = new Vote(null, LocalDate.now(), restaurantRepository.getOne(restaurantId));
 
         log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
+
         vote.setUser(userRepository.getOne(userId));
-        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
         if (todayVote != null) {

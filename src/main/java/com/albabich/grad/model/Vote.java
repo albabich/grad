@@ -1,5 +1,6 @@
 package com.albabich.grad.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Vote extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference("user")
     @NotNull
     private User user;
 
@@ -22,6 +24,7 @@ public class Vote extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @BatchSize(size = 200)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @JsonBackReference
     @NotNull
     private Restaurant restaurant;
 

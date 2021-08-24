@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.albabich.grad.web.RestaurantTestData.REST_WITH_MENU_ITEMS_MATCHER;
-import static com.albabich.grad.web.RestaurantTestData.restaurantsWithMenuToday;
+import static com.albabich.grad.util.RestaurantUtil.getTos;
+import static com.albabich.grad.web.RestaurantTestData.*;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
 import static com.albabich.grad.web.UserTestData.user1;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -26,11 +26,21 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllWithMenuItemsToday() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL+"with-menu/today")
+        perform(MockMvcRequestBuilders.get(REST_URL + "with-menu/today")
                 .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(REST_WITH_MENU_ITEMS_MATCHER.contentJson(restaurantsWithMenuToday));
+    }
+
+    @Test
+    void getAllWithVotesToday() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + "with-votes/today")
+                .with(userHttpBasic(user1)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(REST_TO_WITH_VOTES_MATCHER.contentJson(getTos(restaurants)));
     }
 }
