@@ -43,7 +43,6 @@ public class User extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("date DESC")
-    @JsonManagedReference("user")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Vote> votes;
 
