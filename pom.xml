@@ -18,25 +18,25 @@
 
         <spring.version>5.3.8</spring.version>
         <spring.security.version>5.5.1</spring.security.version>
-        <spring-data-jpa.version>2.4.5</spring-data-jpa.version>
-        <jackson-json.version>2.12.2</jackson-json.version>
-        <tomcat.version>9.0.43</tomcat.version>
+        <spring-data-jpa.version>2.5.2</spring-data-jpa.version>
+        <jackson.version>2.12.4</jackson.version>
+
+        <tomcat.version>9.0.48</tomcat.version>
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.30</slf4j.version>
 
+        <!--DB-->
+        <postgresql.version>42.2.21</postgresql.version>
         <!--    Tests  -->
-        <junit.jupiter.version>5.7.1</junit.jupiter.version>
+        <junit.jupiter.version>5.7.2</junit.jupiter.version>
         <assertj.version>3.19.0</assertj.version>
         <hamcrest.version>2.2</hamcrest.version>
         <json-path.version>2.5.0</json-path.version>
 
-        <!--DB-->
-        <postgresql.version>42.2.18</postgresql.version>
-
         <!-- Hibernate -->
-        <hibernate.version>5.4.28.Final</hibernate.version>
+        <hibernate.version>5.5.2.Final</hibernate.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <javax-el.version>3.0.1-b12</javax-el.version>
 
@@ -57,13 +57,11 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
             </plugin>
-
             <plugin>
                 <!--https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -85,10 +83,8 @@
                         <containerId>tomcat9x</containerId>
                         <systemProperties>
                             <file.encoding>UTF-8</file.encoding>
-                            <!--                            <spring.profiles.active>tomcat</spring.profiles.active>-->
                         </systemProperties>
                         <dependencies>
-                            <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
                             <dependency>
                                 <groupId>org.hsqldb</groupId>
                                 <artifactId>hsqldb</artifactId>
@@ -174,12 +170,6 @@
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.bgee.log4jdbc-log4j2</groupId>-->
-        <!--            <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>-->
-        <!--            <version>${log4jdbc.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
 
         <!--- ORM -->
         <dependency>
@@ -188,8 +178,32 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!--    Validation-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.14.2</version>
+        </dependency>
+
+        <!--http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el-->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax-el.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Cache -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
@@ -215,26 +229,6 @@
             <version>2.4.0-b180830.0438</version>
         </dependency>
 
-        <!--    Validation-->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-
-        <!--http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el-->
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>${javax-el.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!--Web-->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
@@ -258,17 +252,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson-json.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hibernate5</artifactId>
-            <version>${jackson-json.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson-json.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!--Test-->
@@ -311,19 +305,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!--DB-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+               <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>2.5.1</version>
-            <!--            <scope>test</scope>-->
+            <version>2.6.0</version>
         </dependency>
 
         <dependency>
@@ -338,22 +324,7 @@
             <version>${slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
-
-        <!--Swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
     </dependencies>
-
-    <profiles>
-    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -367,4 +338,3 @@
         </dependencies>
     </dependencyManagement>
 </project>
-

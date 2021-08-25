@@ -6,7 +6,6 @@ import com.albabich.grad.to.RestaurantTo;
 import com.albabich.grad.util.RestaurantUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,6 @@ public class RestaurantRestController {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @Cacheable("restaurantsAndMenus")
     @GetMapping("/with-menu/today")
     public List<Restaurant> getAllWithMenuItemsToday() {
         log.info("getAll with menuItems today");

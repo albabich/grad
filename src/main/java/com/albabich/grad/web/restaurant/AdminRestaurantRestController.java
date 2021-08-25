@@ -4,7 +4,6 @@ import com.albabich.grad.model.Restaurant;
 import com.albabich.grad.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,7 +44,6 @@ public class AdminRestaurantRestController {
         return checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
     }
 
-    @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -53,7 +51,6 @@ public class AdminRestaurantRestController {
         checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
     }
 
-    @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
@@ -70,7 +67,6 @@ public class AdminRestaurantRestController {
         }
     }
 
-    @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {

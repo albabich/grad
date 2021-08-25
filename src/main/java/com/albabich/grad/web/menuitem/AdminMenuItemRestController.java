@@ -7,7 +7,6 @@ import com.albabich.grad.to.MenuItemTo;
 import com.albabich.grad.util.MenuItemUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,12 +46,10 @@ public class AdminMenuItemRestController {
         return checkNotFoundWithId(menuItem, id, restaurantId);
     }
 
-    @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @Transactional
     @PostMapping(value = "/{restaurantId}/menu-items", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItemTo menuItemTo, @PathVariable int restaurantId) {
         log.info("create menuItem{} for restaurant {}", menuItemTo, restaurantId);
-//        try {
         Assert.notNull(menuItemTo, "menuItemTo must not be null");
         checkNew(menuItemTo);
         MenuItem menuItem = MenuItemUtil.createNewFromTo(menuItemTo);
@@ -62,13 +59,8 @@ public class AdminMenuItemRestController {
                 .path(REST_URL + "/" + restaurantId + "/menu-items" + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
-//        } catch (DataIntegrityViolationException e) {
-//            throw new DataIntegrityViolationException(EXCEPTION_DUPLICATE_MENU_ITEM_MESSAGE);
-//        }
-
     }
 
-    @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @Transactional
     @PutMapping(value = "/{restaurantId}/menu-items/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -85,7 +77,6 @@ public class AdminMenuItemRestController {
         }
     }
 
-    @CacheEvict(value = "restaurantsAndMenus", allEntries = true)
     @DeleteMapping("/{restaurantId}/menu-items/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id, @PathVariable int restaurantId) {
