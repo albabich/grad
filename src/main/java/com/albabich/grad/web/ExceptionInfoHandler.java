@@ -4,6 +4,7 @@ import com.albabich.grad.util.ValidationUtil;
 import com.albabich.grad.util.exception.ErrorInfo;
 import com.albabich.grad.util.exception.IllegalRequestDataException;
 import com.albabich.grad.util.exception.NotFoundException;
+import com.albabich.grad.util.exception.VoteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -29,6 +30,12 @@ public class ExceptionInfoHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
+        return logAndGetErrorInfo(req, e);
+    }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(VoteException.class)
+    public ErrorInfo handleError(HttpServletRequest req, VoteException e) {
         return logAndGetErrorInfo(req, e);
     }
 

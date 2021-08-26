@@ -89,11 +89,11 @@ public class ValidationUtil {
         return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
     }
 
-    private static final LocalTime CLOSEVOTING = LocalTime.of(23, 59);
+    private static final LocalTime CLOSEVOTING = LocalTime.of(11, 00);
 
-    public static void checkVoteAbility() {
+    public static void checkChangeVoteAbility() {
         if (LocalTime.now().isAfter(CLOSEVOTING)) {
-            throw new VoteException("You can vote until 11:00");
+            throw new VoteException(String.format("You can change vote only until %s", CLOSEVOTING));
         }
     }
 }

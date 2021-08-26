@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 
-import static com.albabich.grad.util.ValidationUtil.checkVoteAbility;
+import static com.albabich.grad.util.ValidationUtil.checkChangeVoteAbility;
 
 @RestController
 @RequestMapping(value = ProfileVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,17 +44,18 @@ public class ProfileVoteRestController {
     @Transactional
     @PostMapping()
     public ResponseEntity<Vote> createWithLocation(@RequestBody @Valid VoteTo voteTo, @AuthenticationPrincipal AuthorizedUser authUser) {
-        checkVoteAbility();
+
         int userId = authUser.getId();
         int restaurantId = voteTo.getRestaurantId();
-        Vote vote = new Vote(null, LocalDate.now(), restaurantRepository.getOne(restaurantId));
+        Vote vote = new Vote(null, LocalDate.now(), restaurantRepository.getById(restaurantId));
 
         log.info("create vote {} for user {} for restaurant {}", vote, userId, restaurantId);
 
-        vote.setUser(userRepository.getOne(userId));
+        vote.setUser(userRepository.getById(userId));
 
         Vote todayVote = voteRepository.getByDateAndUser(LocalDate.now(), userId);
         if (todayVote != null) {
+            checkChangeVoteAbility();
             vote.setId(todayVote.id());
         }
 
