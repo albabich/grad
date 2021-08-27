@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.albabich.grad.util.ValidationUtil.checkNotFoundWithId;
-import static com.albabich.grad.web.MenuItemTestData.*;
-import static com.albabich.grad.web.RestaurantTestData.REST1_ID;
+import static com.albabich.grad.web.menuitem.MenuItemTestData.*;
+import static com.albabich.grad.web.restaurant.RestaurantTestData.REST1_ID;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
-import static com.albabich.grad.web.UserTestData.admin;
+import static com.albabich.grad.web.user.UserTestData.admin;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

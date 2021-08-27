@@ -14,10 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
-import static com.albabich.grad.web.MenuItemTestData.NOT_FOUND;
-import static com.albabich.grad.web.RestaurantTestData.*;
+import static com.albabich.grad.web.menuitem.MenuItemTestData.NOT_FOUND;
+import static com.albabich.grad.web.restaurant.RestaurantTestData.*;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
-import static com.albabich.grad.web.UserTestData.admin;
+import static com.albabich.grad.web.user.UserTestData.admin;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

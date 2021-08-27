@@ -1,14 +1,15 @@
-package com.albabich.grad.web;
+package com.albabich.grad.web.vote;
 
 import com.albabich.grad.model.Vote;
+import com.albabich.grad.web.MatcherFactory;
 
 import java.time.Month;
 import java.util.List;
 
 import static com.albabich.grad.model.AbstractBaseEntity.START_SEQ;
-import static com.albabich.grad.web.RestaurantTestData.*;
-import static com.albabich.grad.web.UserTestData.user1;
-import static com.albabich.grad.web.UserTestData.user2;
+import static com.albabich.grad.web.restaurant.RestaurantTestData.*;
+import static com.albabich.grad.web.user.UserTestData.user1;
+import static com.albabich.grad.web.user.UserTestData.user2;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
 

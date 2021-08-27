@@ -6,9 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.albabich.grad.util.RestaurantUtil.getTos;
-import static com.albabich.grad.web.RestaurantTestData.*;
+import static com.albabich.grad.web.restaurant.RestaurantTestData.*;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
-import static com.albabich.grad.web.UserTestData.user1;
+import static com.albabich.grad.web.user.UserTestData.user1;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

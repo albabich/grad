@@ -14,11 +14,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.albabich.grad.web.RestaurantTestData.*;
+import static com.albabich.grad.web.restaurant.RestaurantTestData.*;
 import static com.albabich.grad.web.TestUtil.userHttpBasic;
-import static com.albabich.grad.web.UserTestData.user1;
-import static com.albabich.grad.web.UserTestData.user2;
-import static com.albabich.grad.web.VoteTestData.VOTE_MATCHER;
+import static com.albabich.grad.web.user.UserTestData.user1;
+import static com.albabich.grad.web.user.UserTestData.user2;
+import static com.albabich.grad.web.vote.VoteTestData.VOTE_MATCHER;
 import static java.time.LocalDate.now;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

@@ -1,13 +1,14 @@
-package com.albabich.grad.web;
+package com.albabich.grad.web.restaurant;
 
 import com.albabich.grad.model.Restaurant;
 import com.albabich.grad.to.RestaurantTo;
+import com.albabich.grad.web.MatcherFactory;
 
 import java.util.List;
 
 import static com.albabich.grad.model.AbstractBaseEntity.START_SEQ;
-import static com.albabich.grad.web.MenuItemTestData.*;
-import static com.albabich.grad.web.VoteTestData.*;
+import static com.albabich.grad.web.menuitem.MenuItemTestData.*;
+import static com.albabich.grad.web.vote.VoteTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantTestData {
