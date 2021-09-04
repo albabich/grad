@@ -22,17 +22,17 @@ import java.net.URI;
 import static com.albabich.grad.util.ValidationUtil.*;
 
 @RestController
-@RequestMapping(value = AdminMenuItemRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminMenuItemRestController {
+@RequestMapping(value = AdminMenuItemController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminMenuItemController {
     protected static final String EXCEPTION_DUPLICATE_MENU_ITEM_MESSAGE = "You already have menuItem with this name for today";
     static final String REST_URL = "/rest/admin/restaurants";
 
-    private static final Logger log = LoggerFactory.getLogger(AdminMenuItemRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminMenuItemController.class);
 
     private final MenuItemRepository menuItemRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public AdminMenuItemRestController(MenuItemRepository menuItemRepository, RestaurantRepository restaurantRepository) {
+    public AdminMenuItemController(MenuItemRepository menuItemRepository, RestaurantRepository restaurantRepository) {
         this.menuItemRepository = menuItemRepository;
         this.restaurantRepository = restaurantRepository;
     }

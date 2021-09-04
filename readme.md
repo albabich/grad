@@ -1,3 +1,6 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/57c8ebf9cddc4ccf8dd458df2f6bd545)](https://www.codacy.com/gh/albabich/grad/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=albabich/grad&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://app.travis-ci.com/albabich/grad.svg?branch=master)](https://travis-ci.com/albabich/grad)
+
 ### curl samples (application deployed at application context `grad`).
 
 > For windows use `Git Bash`

@@ -25,17 +25,17 @@ import java.time.LocalDate;
 import static com.albabich.grad.util.ValidationUtil.checkChangeVoteAbility;
 
 @RestController
-@RequestMapping(value = ProfileVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProfileVoteRestController {
+@RequestMapping(value = ProfileVoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class ProfileVoteController {
     static final String REST_URL = "/rest/profile/votes";
 
-    private static final Logger log = LoggerFactory.getLogger(ProfileVoteRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(ProfileVoteController.class);
 
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public ProfileVoteRestController(VoteRepository voteRepository, UserRepository userRepository, RestaurantRepository restaurantRepository) {
+    public ProfileVoteController(VoteRepository voteRepository, UserRepository userRepository, RestaurantRepository restaurantRepository) {
         this.voteRepository = voteRepository;
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;

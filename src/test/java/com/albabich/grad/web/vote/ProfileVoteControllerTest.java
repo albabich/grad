@@ -23,8 +23,8 @@ import static java.time.LocalDate.now;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class ProfileVoteRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = ProfileVoteRestController.REST_URL + '/';
+class ProfileVoteControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = ProfileVoteController.REST_URL + '/';
 
     @Autowired
     private VoteRepository voteRepository;

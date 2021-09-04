@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class AdminRestaurantRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = AdminRestaurantRestController.REST_URL + '/';
+public class AdminRestaurantControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
     @Autowired
     private RestaurantRepository restaurantRepository;
 

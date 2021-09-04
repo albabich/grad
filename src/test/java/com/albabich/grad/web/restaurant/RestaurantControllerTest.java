@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class RestaurantRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = RestaurantRestController.REST_URL + '/';
+class RestaurantControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = RestaurantController.REST_URL + '/';
 
 //    @Autowired
 //    private CacheManager cacheManager;

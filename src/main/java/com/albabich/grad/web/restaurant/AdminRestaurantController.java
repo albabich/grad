@@ -19,16 +19,16 @@ import java.util.List;
 import static com.albabich.grad.util.ValidationUtil.*;
 
 @RestController
-@RequestMapping(value = AdminRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestaurantRestController {
+@RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminRestaurantController {
     public static final String REST_URL = "/rest/admin/restaurants";
 
-    private static final Logger log = LoggerFactory.getLogger(AdminRestaurantRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminRestaurantController.class);
     protected static final String EXCEPTION_DUPLICATE_RESTAURANT_MESSAGE = "You already have restaurant with this name";
 
     private final RestaurantRepository restaurantRepository;
 
-    public AdminRestaurantRestController(RestaurantRepository restaurantRepository) {
+    public AdminRestaurantController(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 
