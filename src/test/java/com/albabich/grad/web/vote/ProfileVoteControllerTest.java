@@ -35,7 +35,7 @@ class ProfileVoteControllerTest extends AbstractControllerTest {
     @Test
     void createWithLocation() throws Exception {
         VoteTo newVoteTo = new VoteTo(REST1_ID);
-        Vote newVote = new Vote(null, now(), restaurantRepository.getOne(newVoteTo.getRestaurantId()));
+        Vote newVote = new Vote(null, now(), restaurantRepository.getById(newVoteTo.getRestaurantId()));
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newVoteTo))
@@ -47,7 +47,7 @@ class ProfileVoteControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newVote.setId(newId);
         VOTE_MATCHER.assertMatch(created, newVote);
-        Vote actual = voteRepository.getOne(newId);
+        Vote actual = voteRepository.getById(newId);
         VOTE_MATCHER.assertMatch(actual, newVote);
         REST_MATCHER.assertMatch(actual.getRestaurant(), rest1);
     }
@@ -55,7 +55,7 @@ class ProfileVoteControllerTest extends AbstractControllerTest {
     @Test
     void createIfExist() throws Exception {
         VoteTo newVoteTo = new VoteTo(REST3_ID);
-        Vote newVote = new Vote(null, now(), restaurantRepository.getOne(newVoteTo.getRestaurantId()));
+        Vote newVote = new Vote(null, now(), restaurantRepository.getById(newVoteTo.getRestaurantId()));
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newVoteTo))
@@ -67,7 +67,7 @@ class ProfileVoteControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newVote.setId(newId);
         VOTE_MATCHER.assertMatch(created, newVote);
-        Vote actual = voteRepository.getOne(newId);
+        Vote actual = voteRepository.getById(newId);
         VOTE_MATCHER.assertMatch(actual, newVote);
         REST_MATCHER.assertMatch(actual.getRestaurant(), rest3);
     }
@@ -81,6 +81,6 @@ class ProfileVoteControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(newVoteTo))
                 .with(userHttpBasic(user2)))
                 .andDo(print())
-                .andExpect(status().isConflict());
+                .andExpect(status().isUnprocessableEntity());
     }
 }

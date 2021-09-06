@@ -1,9 +1,12 @@
 package com.albabich.grad.web.restaurant;
 
+import com.albabich.grad.to.RestaurantTo;
 import com.albabich.grad.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static com.albabich.grad.util.RestaurantUtil.getTos;
 import static com.albabich.grad.web.restaurant.RestaurantTestData.*;
@@ -36,11 +39,15 @@ class RestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllWithVotesToday() throws Exception {
+        RestaurantTo restaurantTo1 = new RestaurantTo(100004, "Khachapuri and Wine", 1);
+        RestaurantTo restaurantTo2 = new RestaurantTo(100005, "Munhell", 1);
+        RestaurantTo restaurantTo3 = new RestaurantTo(100006, "Kwakinn", 1);
+        List<RestaurantTo> restaurantTos = List.of(restaurantTo1, restaurantTo2, restaurantTo3);
         perform(MockMvcRequestBuilders.get(REST_URL + "with-votes/today")
                 .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(REST_TO_WITH_VOTES_MATCHER.contentJson(getTos(restaurants)));
+                .andExpect(REST_TO_WITH_VOTES_MATCHER.contentJson(restaurantTos));
     }
 }
